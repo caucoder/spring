@@ -116,6 +116,13 @@ If exists multiple beans.You need to use @Qualifier to state the bean id.
 ![](imgs/annotation-1.PNG)
 
 
+---
+
+### Bean scope annotation
+
+> @Scope("prototype")
+> @Postconstructor @PreDestroy  javax.annotation
+
 
 ## Spring Jar
 
