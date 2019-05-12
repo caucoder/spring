@@ -4,3 +4,4 @@ lib
 *.class
 .settings
 bin
+/.metadata/
