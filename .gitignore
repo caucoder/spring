@@ -1,3 +1,6 @@
 .vscode
 .project
 lib
+*.class
+.settings
+bin

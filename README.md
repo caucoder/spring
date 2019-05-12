@@ -33,6 +33,18 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 
 
 
+## Bean scope
+
+
+
+### Bean lifecycle methods
+
+![](imgs/bean-lifecycle.PNG)
+
+
+
+
+
 ## Spring Jar
 
 [spring jar download](http://repo.spring.io/release/org/springframework/spring/)
