@@ -36,8 +36,17 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 ## Bean scope
 
 
+[ApplicationContext.xml](01-Spring-demo/src/ApplicationContext.xml)
+
+
+> scope
+
+- [singleton  默认]()
+- [prototype]()
 
 ### Bean lifecycle methods
+
+> init-method  destroy-method
 
 ![](imgs/bean-lifecycle.PNG)
 
