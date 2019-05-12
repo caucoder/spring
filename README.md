@@ -53,6 +53,33 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 
 
 
+## Annotation config
+
+### 背景
+
+- Configure your spring beans with Annotaions that can minimize the xml configuration size.
+
+### spring framework 背后的工作
+
+- Spring will scan your java class for special annotaions
+- Automatically reister the beans in container.
+
+### 步骤
+
+- Enable component scanning in spring config file
+    ```xml
+    <context:component-scan base-package="edu.cau.hzz" />
+    ```
+- Add @component annotation to your java classes.
+
+
+### 细节
+
+- Default id: the class name: make first letter lower-case
+
+
+
+
 
 ## Spring Jar
 
