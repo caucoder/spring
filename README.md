@@ -55,6 +55,11 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 
 ## Annotation config
 
+- @Component Ioc
+- @Autowired dependency injection
+
+
+
 ### 背景
 
 - Configure your spring beans with Annotaions that can minimize the xml configuration size.
@@ -78,6 +83,37 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 - Default id: the class name: make first letter lower-case
 
 
+
+
+
+---
+
+### Dependency Injection Annotaion
+
+
+- construtor injection
+    ```java
+    @Autowired
+    public TrackCoach(@Qualifier("randomFortuneService") FortuneService fortuneService) {
+        this.fortuneService = fortuneService;
+    }
+    ```
+- setter injection
+- Field Injection
+    ```java
+    @Autowired
+    @Qualifier("randomFortuneService")
+    private FortuneService fortuneService;
+    ```
+- Any method 
+> Inject dependencies by calling any method on your class
+
+
+
+> Spring will find a bean that implements the interface.
+If exists multiple beans.You need to use @Qualifier to state the bean id. 
+
+![](imgs/annotation-1.PNG)
 
 
 

@@ -11,10 +11,10 @@ public class App {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
         // get beans for container
-        Coach coach = context.getBean("myCoach", Coach.class);
+        Coach coach = context.getBean("trackCoach", Coach.class);
 
         // use method
-        System.out.println(coach.getDailyWorkOut());
+        System.out.println(coach.getDailyFortune());
         // close container
         context.close();
 
