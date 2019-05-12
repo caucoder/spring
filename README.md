@@ -56,4 +56,5 @@ Spring has an object factory.Spring is responsiable for creating objects and als
 
 ## Spring Jar
 
-[spring jar download](http://repo.spring.io/release/org/springframework/spring/)
+- [spring jar download](http://repo.spring.io/release/org/springframework/spring/)
+- [spring xml configure](https://docs.spring.io/spring/docs/4.2.x/spring-framework-reference/html/xsd-configuration.html)
