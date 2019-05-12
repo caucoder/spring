@@ -5,6 +5,8 @@ import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("singleton")
+@PropertySource("classpath:sport.properties")
 public class TrackCoach implements Coach {
+
+    // inject properties
+    @Value("${foo.email}")
+    private String email;
 
     @Autowired
     @Qualifier("randomFortuneService")
@@ -43,6 +50,10 @@ public class TrackCoach implements Coach {
     @PreDestroy
     public void doDestroyStuff() {
         System.out.println(">> Inside doDestroyStuff() method");
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
 }

@@ -124,6 +124,29 @@ If exists multiple beans.You need to use @Qualifier to state the bean id.
 > @Postconstructor @PreDestroy  javax.annotation
 
 
+---
+
+
+## Inject properties
+
+> Reference values from properties file
+```java
+@Component
+@Scope("singleton")
+@PropertySource("classpath:sport.properties")
+public class TrackCoach implements Coach {
+
+    // inject properties
+    @Value("${foo.email}")
+    private String email;
+    //...
+}
+```
+
+- @PropertySource
+- @Value("${}")
+
+
 ## Spring Jar
 
 - [spring jar download](http://repo.spring.io/release/org/springframework/spring/)

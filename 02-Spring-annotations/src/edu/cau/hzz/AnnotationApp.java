@@ -14,7 +14,8 @@ public class AnnotationApp {
         Coach coach2 = context.getBean("trackCoach", Coach.class);
 
         System.out.println("Point to the same memory address: " + (coach1 == coach2));
-        // System.out.println(coach.getDailyFortune());
+
+        System.out.println(((TrackCoach) coach1).getEmail());
         context.close();
 
     }
