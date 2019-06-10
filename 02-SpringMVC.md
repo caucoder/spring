@@ -19,10 +19,11 @@
 
 ## Set up environment
 
-- eclipse(JavaEE)
+- 用eclipse(JavaEE)，而不是vscode。因为要创建dynamic web project
 - tomcat
 - connect to tomcat
 
+[spring-mvc-demo](./03-Spring-MVC-demo/spring-mvc-demo)
 
 ### springmvc configuration process
 
@@ -90,7 +91,144 @@
 
 
 
+**运行第一个SpringMVC,jsp出现红叉问题** [The superclass “javax.servlet.http.HttpServlet” was not found on the Java Build Path in Eclipse](https://howtodoinjava.com/eclipse/solved-the-superclass-javax-servlet-http-httpservlet-was-not-found-on-the-java-build-path-in-eclipse/)
 
+
+[error eclipse](https://stackoverflow.com/questions/54290263/more-than-one-fragment-with-the-name-spring-web-was-found-this-is-not-legal-w)
+
+
+
+
+
+
+## Model
+
++ Model 是数据的容器，是Controller与View Page中的信使
++ JSP中访问参数是param,Control是HttpServletRequest
+
+Controller参数绑定
+```java
+//直接获取	
+public String processFormVersionThree(
+			@RequestParam("studentName") String theName,
+			Model model)
+// 通过HttpServletRequest
+public String letsShoutDude(HttpServletRequest request,Model model) {
+		// Read the request parameter from request
+		String theName = request.getParameter("studentName");
+        //...
+}s
+```
+
+
+
+----------
+
+
+## @RequestMapping
+
++ 修饰class
++ 修饰method
+
+
+
+## Spring MVC Form tags
+
+[spring-mvc-demo](./spring-mvc-demo)
+
+> 数据绑定流程
+
+![](imgs/springmvc-data-binding.PNG)
+
+表单数据绑定
+
+[Controller]() 注意model.addAttribute,@ModelAttribute
+```java
+@RequestMapping("/showForm")
+public String showForm(Model theModel) {
+    // create a student object
+    Student theStudent = new Student();
+    //add student object to the model
+    theModel.addAttribute("student", theStudent);
+    return "student-form";
+}
+
+
+@RequestMapping("/processForm")
+public String processForm(@ModelAttribute("student") Student student) {
+    // log the input data
+    System.out.println(student);
+    return "student-confirmation";
+}
+```
+
+[View]() 使用spring mvc form tags，注意modelAttribute
+```jsp
+<form:form action="processForm" method="GET" modelAttribute="student">
+    First name: <form:input path="firstName" />
+    <br><br>
+    Last name: <form:input path="lastName" />
+    <br><br>
+    <input type="submit" value="Submit"> 
+</form:form>
+
+<!-- 取出数据 -->
+The Student is confirmed: ${student.firstName} ${student.lastName}
+
+```
+
+
+### 下拉列表
+
+```jsp
+<form:select path="country">
+    <form:option value="China" label="China"/>
+    <form:option value="Japan" label="Japan"/>
+    <form:option value="India" label="India"/>
+    <form:option value="America" label="America"/>
+</form:select>
+```
+
+```jsp
+<form:options items="${student.countryOptions}"/>	
+```
+列表与LinkedHashMap
+```java
+countryOptions = new LinkedHashMap<>();
+countryOptions.put("CN", "China");
+```
+
+
+### 单选框
+
+```jsp
+Java<form:radiobutton path="favoriteLanguage" value="Java"/>
+```
+
+
+### 多选框
+
+```jsp
+Mac OS<form:checkbox path="operatingSystems" value="Mac OS"/>
+Linux<form:checkbox path="operatingSystems" value="Linux"/>
+MS Windows<form:checkbox path="operatingSystems" value="MS Windows"/>
+```
+
+Java代码处理,字符数组处理
+```java
+private String[] operatingSystems;
+```
+
+
+显示的时候使用jstl的<c:forEach>功能标签
+```jsp
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<ul>
+    <c:forEach items="${student.operatingSystems}" var="tmp">
+        <li>${tmp}</li>
+    </c:forEach>
+</ul>
+```
 
 
 ## SpringMVC Docs
@@ -109,3 +247,5 @@
 
 
 [spring mvc jsp InternalResourceViewResolver](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-view-jsp)
+
+
