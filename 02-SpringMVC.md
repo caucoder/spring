@@ -236,6 +236,8 @@ private String[] operatingSystems;
 
 ## 校验
 
+> 使用[Hibernate validator](http://hibernate.org/validator/)
+
 ### 基本校验
 
 1. 在java bean 对象上添加校验的规则
@@ -256,7 +258,7 @@ public class Customer {
 <form:errors path="lastName" cssClass="error"/>
 ```
 
-3. Controller类处理提交的请求，在请求中@Valid 进行校验，结果在BindingResult
+3. Controller类处理提交的请求，在请求中@Valid 进行校验，检验整个对象，结果在BindingResult
 ```java
 @RequestMapping("/processForm")
 public String processForm(
@@ -287,6 +289,106 @@ public void initBinder(WebDataBinder dataBinder) {
     dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 }
 ```
+
+### 数字范围
+
+```java
+@Min(value=0,message="must be greater than or equal to zero")
+@Max(value=10,message="must be less than or equal to 10")
+private int freePasses;
+```
+
+### 正则表达
+
+```java
+@Pattern(regexp = "^[a-zA-Z0-9]{5}",message = "only 5 char/digits")
+private String postalCode;
+```
+
+
+
+### 配置文件处理String - Interge 转换问题
+
+> 处理长串的自带字符信息
+
+[resources/messages.properties](spring-mvc-demo/src/resources/messages.properties)
+```
+error type, model attri, field , message
+typeMismatch.customer.freePasses=Invalid number
+```
+
+在配置文件
+[spring-mvc-demo-servlet.xml](spring-mvc-demo/WebContent/WEB-INF/spring-mvc-demo-servlet.xml)  ResourceBundleMessageSource
+```xml
+<!--  load custom message resources -->
+<bean id="messageSource"
+    class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames" value="resources/messages" />
+</bean>
+```
+
+error type 信息通过后台测试代码bindingResult知道
+```java
+@RequestMapping("/processForm")
+public String processForm(
+        @Valid @ModelAttribute("customer") Customer customer,
+        BindingResult bindingResult) {
+    
+    System.out.println("Last name: | "+customer.getLastName()+" |");
+    System.out.println("Binding Result: "+bindingResult);
+    //...
+        }
+```
+
+## 自定义validator
+
+[code](spring-mvc-demo/src/edu/cau/validation)
+
+1. 创建注解
+```java
+@Constraint(validatedBy = CourseCodeConstraintValidator.class)
+@Target({ElementType.METHOD,ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CourseCode {
+	//define default course code
+	public String value() default "LUV";
+	//define default error message
+	public String message() default "must start with LUV"; 
+	//define default groups
+	public Class<?>[] groups() default {};
+	//define default payloads
+	public Class<? extends Payload>[] payload() default {};
+}
+```
+
+
+2. 定义校验规则
+```java
+public class CourseCodeConstraintValidator 
+	implements  ConstraintValidator<CourseCode, String>{
+	
+	private String coursePrefix;
+	
+	@Override
+	public void initialize(CourseCode courseCode) {
+		// TODO Auto-generated method stub
+		this.coursePrefix = courseCode.value();
+	}
+
+	@Override
+	public boolean isValid(String code, ConstraintValidatorContext constraint) {
+		// TODO Auto-generated method stub
+		boolean result;
+		if(code == null) {
+			result = true;
+		}else {
+			result = code.startsWith(coursePrefix);
+		}
+		return result;
+	}
+}
+```
+
 
 
 
