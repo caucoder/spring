@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Customer Confirmation</title>
 </head>
 <body>
-	<p>Hello World</p>
-	
-	<hr>
-	<a href="student/showForm">Student show form</a>
-	<hr>
-	<a href="customer/showForm">Customer show form</a>
+	The customer is confirmed: ${customer.firstName} ${customer.lastName}
 </body>
 </html>

@@ -230,6 +230,65 @@ private String[] operatingSystems;
 </ul>
 ```
 
+---
+
+
+
+## 校验
+
+### 基本校验
+
+1. 在java bean 对象上添加校验的规则
+```java
+public class Customer {
+	private String firstName;
+	
+	// adding validation rules
+	@NotNull
+	@Size(min=1,message="is required")
+        private String lastName;
+    //
+}
+```
+
+2. view html编写,如果校验失败就会弹出此信息
+```html
+<form:errors path="lastName" cssClass="error"/>
+```
+
+3. Controller类处理提交的请求，在请求中@Valid 进行校验，结果在BindingResult
+```java
+@RequestMapping("/processForm")
+public String processForm(
+        @Valid @ModelAttribute("customer") Customer customer,
+        BindingResult bindingResult) {
+    
+    if(bindingResult.hasErrors()) {
+        return "customer-form";
+    }else {
+        return "customer-confirmation";
+    }
+}
+```
+
+
+
+### 检验时处理空白例子
+
++ @InitBinder 在所有的请求之前都会调用，StringTrimmerEditor是Spring 的API.去除两端空格。
+
+```java
+//在每个请求处理之前都会先调用该方法
+@InitBinder
+public void initBinder(WebDataBinder dataBinder) {
+    System.out.println("called initBinder method.");
+    StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+    //对String都采用stringTrimmerEditor
+    dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+}
+```
+
+
 
 ## SpringMVC Docs
 
@@ -249,3 +308,4 @@ private String[] operatingSystems;
 [spring mvc jsp InternalResourceViewResolver](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-view-jsp)
 
 
+[Hibernate validator](http://hibernate.org/validator/)
