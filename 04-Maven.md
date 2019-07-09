@@ -42,3 +42,20 @@ C:\Users\username\.m2\repository
 + **Maven central remote repository**
 
 [http://repo.maven.apache.org/maven2/](http://repo.maven.apache.org/maven2/)
+
+
+## additional repository
+
+```xml
+<repositories>
+    <id></id>
+    <name></name>
+    <url></url>
+</repositories>
+```
+
+
+## private  mave repository
+
+- maven cloud hosts
+- Nexus
